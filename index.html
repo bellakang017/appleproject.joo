@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Beyond Research — Bella Kang 🍏</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍏</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #F0EDE6;
@@ -16,7 +16,6 @@
       --sage-dark: #7A9B5A;
       --warm-gray: #9A948B;
       --charcoal: #2A2420;
-      --leaf: #C8D1BF;
       --font-display: 'Cormorant Garamond', Georgia, serif;
       --font-body: 'DM Sans', sans-serif;
       --font-hand: 'Caveat', cursive;
@@ -26,18 +25,18 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: var(--font-body); background: var(--bg);
-      color: var(--charcoal); overflow-x: hidden; cursor: default;
+      color: var(--charcoal); overflow-x: hidden;
     }
 
     /* ═══ LEAVES ═══ */
     .leaf {
       position: fixed; pointer-events: none; z-index: 0;
-      opacity: 0.25; animation: leafDrift linear infinite;
+      opacity: 0.2; animation: leafDrift linear infinite;
     }
     @keyframes leafDrift {
-      0% { transform: translateY(-8vh) translateX(0) rotate(0deg); opacity: 0; }
-      8% { opacity: 0.25; }
-      100% { transform: translateY(108vh) translateX(40px) rotate(400deg); opacity: 0; }
+      0% { transform: translateY(-5vh) translateX(0) rotate(0); opacity: 0; }
+      8% { opacity: 0.2; }
+      100% { transform: translateY(105vh) translateX(30px) rotate(360deg); opacity: 0; }
     }
 
     /* ═══ NAV ═══ */
@@ -61,190 +60,173 @@
     }
     .nav-right a:hover { color: var(--brown); }
 
-    /* ═══ CANVAS — Full viewport scattered layout ═══ */
-    .canvas {
-      position: relative;
-      min-height: 100vh;
-      padding: 5rem 0 3rem;
+    /* ═══ HERO ═══ */
+    .hero {
+      padding: 5rem 2rem 1rem;
+      text-align: center;
+      position: relative; z-index: 1;
     }
-
-    /* ═══ CENTER ORB + TITLE ═══ */
-    .center-piece {
-      position: relative;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      min-height: 70vh;
-      padding: 2rem;
+    .hero-mascot {
+      width: 80px; height: 80px;
+      object-fit: contain;
+      margin: 0 auto 1rem;
+      mix-blend-mode: multiply;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.06));
+      animation: mascotBob 4s ease-in-out infinite;
     }
-    .center-orb {
-      width: 200px; height: 200px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), transparent 50%),
-        radial-gradient(circle at 50% 50%, #c8e0b8, #6b9f52 50%, #4a7a38 85%, #3a6028);
-      box-shadow:
-        inset -25px -25px 50px rgba(0,0,0,0.1),
-        inset 12px 12px 24px rgba(255,255,255,0.3),
-        0 10px 40px rgba(74,122,56,0.15),
-        0 0 80px rgba(74,122,56,0.06);
-      margin-bottom: 1.5rem;
-      animation: orbBreath 6s ease-in-out infinite;
-      position: relative;
+    @keyframes mascotBob {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
     }
-    .center-orb::after {
-      content: '🐰'; position: absolute;
-      top: -16px; left: 50%; transform: translateX(-50%);
-      font-size: 1.2rem;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    .hero-sup {
+      font-family: var(--font-mono); font-size: 0.6rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--warm-gray); margin-bottom: 0.3rem;
     }
-    @keyframes orbBreath {
-      0%,100% { transform: scale(1); }
-      50% { transform: scale(1.03); }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: 2.6rem; font-weight: 300;
+      color: var(--brown); margin-bottom: 0.3rem;
     }
-
-    .center-title {
-      font-family: var(--font-display); font-size: 1rem;
-      font-weight: 400; letter-spacing: 0.15em;
-      text-transform: uppercase; color: var(--warm-gray);
-      margin-bottom: 0.3rem;
+    .hero h1 em { font-style: italic; color: var(--sage-dark); font-weight: 400; }
+    .hero-desc {
+      font-size: 0.88rem; color: var(--warm-gray);
+      font-weight: 300; max-width: 360px; margin: 0 auto;
+      line-height: 1.5;
     }
-    .center-name {
-      font-family: var(--font-display); font-size: 2.4rem;
-      font-weight: 300; color: var(--brown);
-      letter-spacing: 0.02em;
-    }
-    .center-hint {
-      font-family: var(--font-mono); font-size: 0.55rem;
-      color: var(--warm-gray); letter-spacing: 0.1em;
-      margin-top: 0.5rem; text-transform: uppercase;
-    }
-    .center-tags {
-      display: flex; gap: 0.8rem; margin-top: 0.6rem;
-      font-family: var(--font-mono); font-size: 0.55rem;
+    .hero-tags {
+      display: flex; gap: 0.8rem; justify-content: center;
+      margin-top: 0.8rem;
+      font-family: var(--font-mono); font-size: 0.52rem;
       color: var(--sage-dark); letter-spacing: 0.04em;
     }
 
-    /* ═══ SCATTERED ITEMS ═══ */
-    .orb-item {
+    /* ═══ QUOTE TICKER ═══ */
+    .quote-section {
+      text-align: center; padding: 2.5rem 2rem;
+      position: relative; z-index: 1;
+    }
+    .quote-text {
+      font-family: var(--font-display);
+      font-style: italic; font-weight: 300;
+      font-size: 1.2rem; color: var(--brown-light);
+      max-width: 420px; margin: 0 auto;
+      line-height: 1.45;
+      opacity: 0;
+      animation: quoteCycle 15s ease-in-out infinite;
+    }
+    .quote-text:nth-child(2) { animation-delay: 5s; }
+    .quote-text:nth-child(3) { animation-delay: 10s; }
+    @keyframes quoteCycle {
+      0%,8% { opacity: 0; transform: translateY(6px); }
+      12%,28% { opacity: 1; transform: translateY(0); }
+      33%,100% { opacity: 0; transform: translateY(-6px); }
+    }
+    .quote-wrapper {
+      position: relative; height: 3.5rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .quote-wrapper .quote-text {
       position: absolute;
+    }
+
+    /* ═══ ORCHARD — 3 items in a clean row ═══ */
+    .orchard {
+      padding: 1rem 2rem 4rem;
+      max-width: 880px; margin: 0 auto;
+      display: flex; justify-content: center;
+      gap: 3.5rem;
+      position: relative; z-index: 1;
+    }
+
+    .orchard-item {
       text-align: center; cursor: pointer;
-      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
-      z-index: 2;
+      width: 200px;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
     }
-    .orb-item:hover { transform: scale(1.08) translateY(-6px); }
+    .orchard-item:hover { transform: translateY(-8px); }
 
-    .orb-img {
-      display: block; margin: 0 auto 0.5rem;
-      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.1));
-      transition: filter 0.3s;
+    .orchard-img-wrap {
+      width: 160px; height: 160px;
+      margin: 0 auto 0.7rem;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
     }
-    .orb-item:hover .orb-img {
-      filter: drop-shadow(0 10px 24px rgba(0,0,0,0.15));
+    .orchard-img {
+      max-width: 100%; max-height: 100%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.08));
+      transition: filter 0.3s, transform 0.3s;
+    }
+    .orchard-item:hover .orchard-img {
+      filter: drop-shadow(0 10px 24px rgba(0,0,0,0.12));
+      transform: scale(1.04);
     }
 
-    .orb-label {
+    .orchard-label {
       font-family: var(--font-mono); font-size: 0.5rem;
       letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--sage-dark); margin-bottom: 0.1rem;
+      color: var(--sage-dark); margin-bottom: 0.15rem;
     }
-    .orb-name {
-      font-family: var(--font-display); font-size: 1rem;
-      font-weight: 500; color: var(--brown);
-      line-height: 1.25;
+    .orchard-name {
+      font-family: var(--font-display); font-size: 1.05rem;
+      font-weight: 500; color: var(--brown); line-height: 1.25;
     }
-
-    /* Positions for scattered layout */
-    .item-pilates {
-      top: 12%; right: 8%;
+    .orchard-hint {
+      font-family: var(--font-hand); font-size: 0.85rem;
+      color: var(--sage-dark); margin-top: 0.35rem;
+      opacity: 0; transition: opacity 0.3s;
     }
-    .item-reading {
-      bottom: 18%; left: 6%;
-    }
-    .item-about {
-      bottom: 10%; right: 12%;
-    }
-
-    /* ═══ FLOATING QUOTES ═══ */
-    .quote-float {
-      position: absolute;
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1.1rem;
-      color: rgba(92,61,46,0.2);
-      max-width: 260px;
-      line-height: 1.4;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0;
-      animation: quoteAppear 12s ease-in-out infinite;
-    }
-    .q1 { top: 25%; left: 5%; animation-delay: 0s; }
-    .q2 { top: 55%; right: 4%; animation-delay: 4s; }
-    .q3 { bottom: 25%; left: 15%; animation-delay: 8s; }
-
-    @keyframes quoteAppear {
-      0%,15% { opacity: 0; transform: translateY(8px); }
-      20%,45% { opacity: 1; transform: translateY(0); }
-      50%,100% { opacity: 0; transform: translateY(-8px); }
-    }
+    .orchard-item:hover .orchard-hint { opacity: 1; }
 
     /* ═══ PANEL OVERLAY ═══ */
     .panel-overlay {
       position: fixed; inset: 0; z-index: 300;
       display: none; align-items: center; justify-content: center;
-      background: rgba(240,237,230,0);
-      transition: background 0.4s;
     }
     .panel-overlay.open {
       display: flex;
       background: rgba(240,237,230,0.92);
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     }
-
     .panel {
-      max-width: 520px; width: 92%;
+      max-width: 500px; width: 92%;
       max-height: 82vh; overflow-y: auto;
-      opacity: 0; transform: scale(0.95) translateY(20px);
-      transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+      opacity: 0; transform: scale(0.96) translateY(16px);
+      transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
       padding: 2rem 0;
     }
     .panel-overlay.open .panel {
       opacity: 1; transform: scale(1) translateY(0);
     }
-
-    .panel-header {
-      text-align: center; margin-bottom: 2rem;
-    }
+    .panel-header { text-align: center; margin-bottom: 1.5rem; }
     .panel-header img {
-      width: 80px; height: 80px; object-fit: contain;
-      margin-bottom: 0.8rem;
-      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08));
+      width: 72px; height: 72px; object-fit: contain;
+      mix-blend-mode: multiply;
+      margin-bottom: 0.7rem;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.06));
     }
     .panel h2 {
-      font-family: var(--font-display); font-size: 2rem;
+      font-family: var(--font-display); font-size: 1.8rem;
       font-weight: 400; color: var(--brown);
     }
     .panel .panel-sub {
       font-family: var(--font-mono); font-size: 0.55rem;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--sage-dark); margin-top: 0.3rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--sage-dark); margin-top: 0.25rem;
     }
-    .panel-body {
-      max-width: 440px; margin: 0 auto;
-    }
+    .panel-body { max-width: 420px; margin: 0 auto; }
     .panel-body p {
-      font-family: var(--font-body); font-size: 0.88rem;
-      color: var(--warm-gray); line-height: 1.7; margin-bottom: 0.7rem;
-      font-weight: 300;
+      font-size: 0.87rem; color: var(--warm-gray);
+      line-height: 1.7; margin-bottom: 0.6rem; font-weight: 300;
     }
     .panel-body strong { color: var(--brown); font-weight: 500; }
     .panel-body em { color: var(--sage-dark); }
-    .panel-divider { height: 1px; background: rgba(92,61,46,0.06); margin: 1.5rem 0; }
-
+    .panel-divider { height: 1px; background: rgba(92,61,46,0.06); margin: 1.2rem 0; }
     .panel-body ul { list-style: none; padding: 0; }
     .panel-body ul li {
-      padding: 0.6rem 0; font-size: 0.85rem;
-      color: var(--warm-gray); font-weight: 300;
+      padding: 0.5rem 0; font-size: 0.84rem; color: var(--warm-gray); font-weight: 300;
       border-bottom: 1px solid rgba(92,61,46,0.04);
       display: flex; align-items: flex-start; gap: 0.5rem;
     }
@@ -252,37 +234,32 @@
       content: '·'; color: var(--sage); font-weight: 700;
       font-size: 1.2rem; line-height: 1; flex-shrink: 0;
     }
-
     .panel-quote {
       font-family: var(--font-display); font-style: italic;
-      font-size: 1.15rem; font-weight: 300;
+      font-size: 1.1rem; font-weight: 300;
       color: var(--brown); text-align: center;
-      padding: 1.5rem 1rem; margin: 1.5rem 0;
+      padding: 1.2rem 0.8rem; margin: 1.2rem 0;
       position: relative;
     }
     .panel-quote::before, .panel-quote::after {
-      content: ''; position: absolute;
-      left: 50%; transform: translateX(-50%);
-      width: 40px; height: 1px; background: var(--sage);
+      content: ''; position: absolute; left: 50%; transform: translateX(-50%);
+      width: 36px; height: 1px; background: var(--sage);
     }
     .panel-quote::before { top: 0; }
     .panel-quote::after { bottom: 0; }
-
-    .panel-close-area {
-      text-align: center; margin-top: 2rem;
-    }
+    .panel-close-area { text-align: center; margin-top: 1.5rem; }
     .panel-close-btn {
-      font-family: var(--font-mono); font-size: 0.6rem;
+      font-family: var(--font-mono); font-size: 0.58rem;
       letter-spacing: 0.08em; text-transform: uppercase;
       color: var(--warm-gray); background: none; border: none;
-      cursor: pointer; padding: 0.5rem 1rem;
-      transition: color 0.2s;
+      cursor: pointer; padding: 0.5rem 1rem; transition: color 0.2s;
     }
     .panel-close-btn:hover { color: var(--brown); }
 
     /* ═══ FOOTER ═══ */
     .page-footer {
-      text-align: center; padding: 1.5rem; position: relative; z-index: 1;
+      text-align: center; padding: 1.5rem;
+      position: relative; z-index: 1;
     }
     .page-footer p {
       font-family: var(--font-mono); font-size: 0.55rem;
@@ -292,23 +269,14 @@
 
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 768px) {
-      .item-pilates { top: 8%; right: 5%; }
-      .item-reading { bottom: 25%; left: 3%; }
-      .item-about { bottom: 5%; right: 5%; }
-      .orb-img { width: 100px !important; height: 100px !important; }
-      .center-orb { width: 150px; height: 150px; }
-      .center-name { font-size: 1.8rem; }
-      .quote-float { font-size: 0.9rem; max-width: 180px; }
+      .orchard { gap: 2rem; }
+      .orchard-img-wrap { width: 120px; height: 120px; }
+      .hero h1 { font-size: 2rem; }
     }
-    @media (max-width: 500px) {
-      .canvas { min-height: auto; padding-bottom: 2rem; }
-      .center-piece { min-height: 50vh; }
-      .orb-item { position: relative !important;
-        top: auto !important; bottom: auto !important;
-        left: auto !important; right: auto !important;
-        margin: 1.5rem auto;
-      }
-      .quote-float { display: none; }
+    @media (max-width: 560px) {
+      .orchard { flex-direction: column; align-items: center; gap: 2rem; }
+      .orchard-item { width: 180px; }
+      .orchard-hint { opacity: 1; }
     }
   </style>
 </head>
@@ -324,48 +292,59 @@
     </div>
   </nav>
 
-  <div class="canvas">
-    <!-- Floating quotes -->
-    <div class="quote-float q1">"The body knows what the mind is still learning."</div>
-    <div class="quote-float q2">"Small shifts redirect self-defeating patterns into self-enhancing ones."</div>
-    <div class="quote-float q3">"Design environments where healthy behaviors happen naturally."</div>
+  <!-- HERO -->
+  <section class="hero">
+    <img src="images/bunny.png" alt="" class="hero-mascot">
+    <p class="hero-sup">Beyond Research</p>
+    <h1>Bella <em>Kang</em></h1>
+    <p class="hero-desc">The body knows what the mind is still learning.</p>
+    <div class="hero-tags">
+      <span>Health Communication</span>
+      <span>·</span>
+      <span>UT Austin</span>
+      <span>·</span>
+      <span>PhD 2027</span>
+    </div>
+  </section>
 
-    <!-- Center orb -->
-    <div class="center-piece" id="parallaxCenter">
-      <div class="center-orb"></div>
-      <p class="center-title">Beyond Research</p>
-      <h1 class="center-name">Bella Kang</h1>
-      <p class="center-hint">· explore the orchard ·</p>
-      <div class="center-tags">
-        <span>Health Communication</span>
-        <span>·</span>
-        <span>UT Austin</span>
-        <span>·</span>
-        <span>PhD 2027</span>
+  <!-- ROTATING QUOTE -->
+  <section class="quote-section">
+    <div class="quote-wrapper">
+      <p class="quote-text">"Small shifts redirect self-defeating patterns into self-enhancing ones."</p>
+      <p class="quote-text">"Design environments where healthy behaviors happen naturally."</p>
+      <p class="quote-text">"The body is not separate from the research. It's the first data point."</p>
+    </div>
+  </section>
+
+  <!-- 3 ITEMS -->
+  <section class="orchard">
+    <div class="orchard-item" onclick="openPanel('pilates')">
+      <div class="orchard-img-wrap">
+        <img src="images/lotus.png" alt="Pilates" class="orchard-img">
       </div>
+      <p class="orchard-label">Embodied</p>
+      <p class="orchard-name">Pilates &<br>Movement</p>
+      <span class="orchard-hint">· click me ·</span>
     </div>
-
-    <!-- Scattered items -->
-    <div class="orb-item item-pilates" data-speed="0.03" onclick="openPanel('pilates')">
-      <img src="images/lotus.png" alt="Pilates" class="orb-img" width="140" height="140">
-      <p class="orb-label">Embodied</p>
-      <p class="orb-name">Pilates &<br>Movement</p>
+    <div class="orchard-item" onclick="openPanel('reading')">
+      <div class="orchard-img-wrap">
+        <img src="images/glass-apple.png" alt="Reading" class="orchard-img">
+      </div>
+      <p class="orchard-label">Community</p>
+      <p class="orchard-name">Saturday<br>Reading Group</p>
+      <span class="orchard-hint">· click me ·</span>
     </div>
-
-    <div class="orb-item item-reading" data-speed="0.02" onclick="openPanel('reading')">
-      <img src="images/glass-apple.png" alt="Reading" class="orb-img" width="130" height="130">
-      <p class="orb-label">Community</p>
-      <p class="orb-name">Saturday<br>Reading Group</p>
+    <div class="orchard-item" onclick="openPanel('about')">
+      <div class="orchard-img-wrap">
+        <img src="images/journal.png" alt="About" class="orchard-img">
+      </div>
+      <p class="orchard-label">Personal</p>
+      <p class="orchard-name">About<br>Bella</p>
+      <span class="orchard-hint">· click me ·</span>
     </div>
+  </section>
 
-    <div class="orb-item item-about" data-speed="0.04" onclick="openPanel('about')">
-      <img src="images/journal.png" alt="About" class="orb-img" width="130" height="130">
-      <p class="orb-label">Personal</p>
-      <p class="orb-name">About<br>Bella</p>
-    </div>
-  </div>
-
-  <!-- ═══ PANELS ═══ -->
+  <!-- PANELS -->
   <div class="panel-overlay" id="overlay-pilates" onclick="closePanel('pilates',event)">
     <div class="panel" onclick="event.stopPropagation()">
       <div class="panel-header">
@@ -386,9 +365,7 @@
         </ul>
         <div class="panel-quote">"The body is not separate from the research.<br>It's the first data point."</div>
       </div>
-      <div class="panel-close-area">
-        <button class="panel-close-btn" onclick="closePanel('pilates')">← back to orchard</button>
-      </div>
+      <div class="panel-close-area"><button class="panel-close-btn" onclick="closePanel('pilates')">← back to orchard</button></div>
     </div>
   </div>
 
@@ -414,9 +391,7 @@
         </ul>
         <div class="panel-quote">"We don't just discuss ideas.<br>We sit with them."</div>
       </div>
-      <div class="panel-close-area">
-        <button class="panel-close-btn" onclick="closePanel('reading')">← back to orchard</button>
-      </div>
+      <div class="panel-close-area"><button class="panel-close-btn" onclick="closePanel('reading')">← back to orchard</button></div>
     </div>
   </div>
 
@@ -440,9 +415,7 @@
         </ul>
         <div class="panel-quote">"Green apple logic —<br>design environments where healthy behaviors happen naturally."</div>
       </div>
-      <div class="panel-close-area">
-        <button class="panel-close-btn" onclick="closePanel('about')">← back to orchard</button>
-      </div>
+      <div class="panel-close-area"><button class="panel-close-btn" onclick="closePanel('about')">← back to orchard</button></div>
     </div>
   </div>
 
@@ -451,54 +424,37 @@
   </footer>
 
   <script>
-    // Falling leaves
+    // Leaves
     !function(){const c=document.getElementById('leaves'),s=['🍃','🌿','✦'];
-    for(let i=0;i<14;i++){const l=document.createElement('span');
+    for(let i=0;i<10;i++){const l=document.createElement('span');
     l.className='leaf';l.textContent=s[Math.floor(Math.random()*s.length)];
     l.style.left=Math.random()*100+'vw';
-    l.style.fontSize=(0.6+Math.random()*0.9)+'rem';
-    l.style.animationDuration=(14+Math.random()*18)+'s';
+    l.style.fontSize=(0.6+Math.random()*0.7)+'rem';
+    l.style.animationDuration=(16+Math.random()*18)+'s';
     l.style.animationDelay=(Math.random()*25)+'s';
-    l.style.color=`rgba(${180+Math.random()*20},${200+Math.random()*15},${170+Math.random()*20},0.3)`;
     c.appendChild(l);}}();
 
-    // Parallax on mouse move
-    document.addEventListener('mousemove', e => {
-      const cx = (e.clientX / window.innerWidth - 0.5) * 2;
-      const cy = (e.clientY / window.innerHeight - 0.5) * 2;
-      document.querySelectorAll('.orb-item').forEach(item => {
-        const speed = parseFloat(item.dataset.speed) || 0.02;
-        const x = cx * speed * 100;
-        const y = cy * speed * 100;
-        item.style.transform = `translate(${x}px, ${y}px)`;
-      });
-      // Center orb subtle reaction
-      const orb = document.querySelector('.center-orb');
-      if(orb) orb.style.transform = `scale(${1 + Math.abs(cy)*0.01}) translate(${cx*3}px, ${cy*2}px)`;
-    });
-
     // Panels
-    function openPanel(id) {
-      const o = document.getElementById('overlay-' + id);
-      o.style.display = 'flex';
-      requestAnimationFrame(() => o.classList.add('open'));
-      document.body.style.overflow = 'hidden';
+    function openPanel(id){
+      const o=document.getElementById('overlay-'+id);
+      o.style.display='flex';
+      requestAnimationFrame(()=>o.classList.add('open'));
+      document.body.style.overflow='hidden';
     }
-    function closePanel(id, e) {
-      if(e && e.target !== e.currentTarget && !e.target.classList.contains('panel-close-btn')) return;
-      const o = document.getElementById('overlay-' + id);
+    function closePanel(id,e){
+      if(e&&e.target!==e.currentTarget&&!e.target.classList.contains('panel-close-btn'))return;
+      const o=document.getElementById('overlay-'+id);
       o.classList.remove('open');
-      setTimeout(() => { o.style.display = 'none'; }, 400);
-      document.body.style.overflow = '';
+      setTimeout(()=>{o.style.display='none';},350);
+      document.body.style.overflow='';
     }
-    // ESC to close
-    document.addEventListener('keydown', e => {
-      if(e.key === 'Escape') {
-        document.querySelectorAll('.panel-overlay.open').forEach(o => {
+    document.addEventListener('keydown',e=>{
+      if(e.key==='Escape'){
+        document.querySelectorAll('.panel-overlay.open').forEach(o=>{
           o.classList.remove('open');
-          setTimeout(() => { o.style.display = 'none'; }, 400);
+          setTimeout(()=>{o.style.display='none';},350);
         });
-        document.body.style.overflow = '';
+        document.body.style.overflow='';
       }
     });
   </script>
