@@ -1,406 +1,399 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cabinet of Curiosities — Bella Kang</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍏</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg:#F4F6F0;--white:#FFFFFF;
-      --forest:#3A5A3A;--forest-lt:#5A7E52;--sage:#8BAF78;--sage-lt:#C2D8B4;
-      --warm:#6B5E4A;--warm-lt:#A89880;--rose:#B85D62;--sky:#5A8EA8;--honey:#B8923A;
-      --char:#2E2A24;--fog:#9A9488;
-      --f1:'Cormorant Garamond',Georgia,serif;
-      --f2:'JetBrains Mono',monospace;
-    }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:var(--f2);background:var(--bg);color:var(--char);
-      height:100vh;overflow:hidden;cursor:none;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cabinet of Curiosities — Bella Kang</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍏</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F6F0;--bg-warm:#F8F7F2;--white:#FFF;
+  --forest:#3A5A3A;--forest-deep:#2C472C;--forest-lt:#5A7E52;
+  --sage:#8BAF78;--sage-lt:#C2D8B4;--sage-mist:rgba(139,175,120,.06);
+  --warm:#6B5E4A;--warm-lt:#A89880;--rose:#B85D62;--sky:#5A8EA8;--honey:#B8923A;
+  --char:#2E2A24;--fog:#9A9488;--border:rgba(58,90,58,.06);
+  --f1:'Cormorant Garamond',Georgia,serif;
+  --f2:'Libre Baskerville',Georgia,serif;
+  --fm:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--f2);background:var(--bg);color:var(--char);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;}
+::selection{background:rgba(139,175,120,.18);color:var(--forest-deep);}
 
-    /* CURSOR */
-    .cur{position:fixed;pointer-events:none;z-index:9999;width:12px;height:12px;
-      border:1.5px solid var(--sage);border-radius:50%;
-      transition:width .2s,height .2s,margin .2s,background .2s;}
-    .cur.hov{width:36px;height:36px;margin:-12px 0 0 -12px;background:rgba(139,175,120,.06);}
-    .trl{position:fixed;pointer-events:none;z-index:9998;border-radius:50%;
-      background:radial-gradient(circle,rgba(139,175,120,.18),transparent 70%);}
-    @media(max-width:768px){.cur,.trl{display:none!important;}body{cursor:default;}}
+/* ═══ NATURE CANVAS ═══ */
+#nc{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.aurora{position:absolute;inset:0;
+  background:radial-gradient(ellipse 55% 45% at 20% 15%,rgba(194,216,180,.07),transparent),
+    radial-gradient(ellipse 45% 55% at 75% 75%,rgba(184,93,98,.03),transparent),
+    radial-gradient(ellipse 35% 40% at 50% 50%,rgba(90,142,168,.03),transparent);
+  animation:auS 30s ease-in-out infinite alternate;}
+@keyframes auS{0%{opacity:.6;transform:scale(1)}100%{opacity:1;transform:scale(1.02)}}
+.fly-bird{position:absolute;opacity:0;animation:bf linear infinite;}
+.fly-bird::before,.fly-bird::after{content:'';position:absolute;width:10px;height:1.5px;
+  background:rgba(107,94,74,.1);border-radius:1px;top:0;}
+.fly-bird::before{left:0;transform:rotate(-25deg);transform-origin:right center;}
+.fly-bird::after{left:8px;transform:rotate(25deg);transform-origin:left center;}
+@keyframes bf{0%{transform:translate(-40px,0);opacity:0}5%{opacity:.3}
+  95%{opacity:.08}100%{transform:translate(calc(100vw + 40px),-60px);opacity:0}}
+.petal{position:absolute;border-radius:50% 0 50% 50%;opacity:0;animation:pd linear infinite;}
+@keyframes pd{0%{transform:translate(0,-20px) rotate(0) scale(0);opacity:0}
+  8%{opacity:.3}50%{transform:translate(-25px,50vh) rotate(180deg) scale(1)}
+  92%{opacity:.06}100%{transform:translate(-50px,105vh) rotate(360deg) scale(.7);opacity:0}}
+.gp{position:absolute;border-radius:50%;
+  background:radial-gradient(circle,rgba(139,175,120,.25),transparent 70%);
+  animation:gpF ease-in-out infinite;}
+@keyframes gpF{0%,100%{transform:translateY(0) scale(1);opacity:.15}
+  50%{transform:translateY(-30px) scale(1.1);opacity:.25}}
 
-    /* NATURE BG */
-    #nature{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-    .fly-bird{position:absolute;opacity:0;animation:bf linear infinite;}
-    .fly-bird::before,.fly-bird::after{content:'';position:absolute;width:10px;height:1.5px;
-      background:rgba(107,94,74,.12);border-radius:1px;top:0;}
-    .fly-bird::before{left:0;transform:rotate(-25deg);transform-origin:right center;}
-    .fly-bird::after{left:8px;transform:rotate(25deg);transform-origin:left center;}
-    @keyframes bf{0%{transform:translate(-40px,0);opacity:0;}5%{opacity:.35;}
-      95%{opacity:.1;}100%{transform:translate(calc(100vw + 40px),-60px);opacity:0;}}
-    .petal{position:absolute;border-radius:50% 0 50% 50%;opacity:0;animation:pd linear infinite;}
-    @keyframes pd{0%{transform:translate(0,-20px) rotate(0) scale(0);opacity:0;}
-      8%{opacity:.35;}50%{transform:translate(-25px,50vh) rotate(180deg) scale(1);}
-      92%{opacity:.08;}100%{transform:translate(-50px,105vh) rotate(360deg) scale(.7);opacity:0;}}
-    .aurora{position:fixed;inset:0;z-index:0;pointer-events:none;
-      background:radial-gradient(ellipse 50% 40% at 25% 20%,rgba(194,216,180,.08),transparent),
-        radial-gradient(ellipse 40% 50% at 70% 70%,rgba(184,93,98,.04),transparent);
-      animation:au 25s ease-in-out infinite alternate;}
-    @keyframes au{0%{opacity:.6;}100%{opacity:1;}}
+/* ═══ LAYOUT ═══ */
+.page{position:relative;z-index:1;display:flex;min-height:100vh;}
 
-    /* ═══ LAYOUT: left info + right grid ═══ */
-    .page{display:flex;height:100vh;position:relative;z-index:1;}
+/* LEFT */
+.pl{width:400px;min-width:360px;padding:3.5rem 2.8rem 2.5rem;
+  display:flex;flex-direction:column;justify-content:space-between;
+  position:sticky;top:0;height:100vh;border-right:1px solid var(--border);}
+.pl h1{font-family:var(--f1);font-size:2.8rem;font-weight:300;
+  color:var(--forest);line-height:1.06;margin-bottom:.2rem;}
+.pl h1 em{font-style:italic;font-weight:400;color:var(--rose);}
+.pl-sub{font-family:var(--fm);font-size:.54rem;color:var(--fog);
+  letter-spacing:.06em;margin-bottom:1.6rem;}
 
-    /* LEFT PANEL */
-    .left{
-      width:38%;min-width:320px;padding:3.5rem 2.5rem 2rem;
-      display:flex;flex-direction:column;justify-content:space-between;
-      border-right:1px solid rgba(58,90,58,.04);
-    }
-    .left-top{}
-    .left h1{font-family:var(--f1);font-size:2.6rem;font-weight:300;
-      color:var(--forest);line-height:1.08;margin-bottom:.15rem;}
-    .left h1 em{font-style:italic;font-weight:400;color:var(--rose);}
-    .left-sub{font-size:.58rem;color:var(--fog);letter-spacing:.04em;margin-bottom:1.2rem;}
-    .left-quote{font-family:var(--f1);font-style:italic;font-weight:300;
-      font-size:.92rem;color:var(--warm-lt);line-height:1.5;margin-bottom:.15rem;}
-    .left-attr{font-size:.46rem;color:var(--fog);margin-bottom:1rem;}
-    .left-desc{font-size:.58rem;color:var(--fog);line-height:1.7;font-weight:300;
-      max-width:340px;}
+/* Typing */
+.tw{margin-bottom:1.6rem;min-height:3.2rem;display:flex;flex-direction:column;}
+.tt{font-family:var(--f1);font-style:italic;font-weight:300;
+  font-size:.95rem;color:var(--warm-lt);line-height:1.55;}
+.tt .bl{display:inline-block;width:1px;height:.95em;background:var(--sage);
+  margin-left:2px;vertical-align:text-bottom;animation:bk 1s step-end infinite;}
+@keyframes bk{0%,100%{opacity:1}50%{opacity:0}}
+.ta{font-family:var(--fm);font-size:.42rem;color:var(--fog);margin-top:.25rem;min-height:.8rem;}
 
-    /* NAV links */
-    .left-nav{display:flex;flex-direction:column;gap:.4rem;}
-    .left-nav a{font-size:.52rem;color:var(--fog);text-decoration:none;
-      letter-spacing:.04em;transition:color .2s;}
-    .left-nav a:hover{color:var(--forest);}
-    .left-copy{font-size:.4rem;color:rgba(154,148,136,.5);margin-top:.6rem;}
+.pl-desc{font-family:var(--fm);font-size:.56rem;color:var(--fog);
+  line-height:1.8;font-weight:300;max-width:340px;}
+.pl-nav{display:flex;flex-direction:column;gap:.45rem;}
+.pl-nav a{font-family:var(--fm);font-size:.52rem;color:var(--fog);text-decoration:none;
+  letter-spacing:.04em;transition:color .3s,transform .3s;display:inline-block;}
+.pl-nav a:hover{color:var(--forest);transform:translateX(3px);}
+.pl-cp{font-family:var(--fm);font-size:.4rem;color:rgba(154,148,136,.4);margin-top:.7rem;}
 
-    /* RIGHT GRID */
-    .right{
-      flex:1;padding:2.5rem;overflow-y:auto;
-      display:grid;grid-template-columns:1fr 1fr;
-      grid-template-rows:1fr 1fr;gap:1.2rem;
-      align-content:center;
-    }
-    .right::-webkit-scrollbar{width:0;}
+/* RIGHT */
+.pr{flex:1;padding:3rem;overflow-y:auto;}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;max-width:720px;}
 
-    /* CARD */
-    .card{
-      position:relative;border-radius:12px;overflow:hidden;
-      cursor:pointer;transition:all .4s cubic-bezier(.34,1.56,.64,1);
-      display:flex;flex-direction:column;
-    }
-    .card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(0,0,0,.06);}
+/* CARD */
+.cd{position:relative;border-radius:14px;overflow:hidden;cursor:pointer;
+  transition:transform .45s cubic-bezier(.34,1.56,.64,1),box-shadow .4s;
+  display:flex;flex-direction:column;min-height:260px;}
+.cd:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(58,90,58,.06);}
+.cd::after{content:'';position:absolute;top:0;right:0;width:40px;height:40px;
+  border-left:1px solid rgba(255,255,255,.3);border-bottom:1px solid rgba(255,255,255,.3);
+  border-radius:0 0 0 12px;opacity:0;transition:opacity .4s;}
+.cd:hover::after{opacity:1;}
+.ci{flex:1;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;min-height:0;}
+.ci img{max-width:60%;max-height:65%;object-fit:contain;
+  transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+  filter:drop-shadow(0 4px 14px rgba(0,0,0,.07));}
+.cd:hover .ci img{transform:scale(1.06) rotate(-1deg);}
+.ci .cp{max-width:100%!important;max-height:100%!important;width:100%!important;
+  height:100%!important;position:absolute;inset:0;object-fit:cover;filter:none!important;}
+.cd:hover .ci .cp{transform:scale(1.04) rotate(0);}
+.cpo{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.4) 0%,transparent 55%);z-index:1;}
+.cl{padding:.7rem .9rem;display:flex;align-items:baseline;gap:.4rem;}
+.cl .cn{font-family:var(--fm);font-size:.38rem;color:var(--fog);letter-spacing:.1em;text-transform:uppercase;}
+.cl .nm{font-family:var(--f1);font-style:italic;font-size:1.05rem;}
 
-    /* Card image area */
-    .card-img{
-      flex:1;display:flex;align-items:center;justify-content:center;
-      position:relative;overflow:hidden;min-height:0;
-    }
-    .card-img img{
-      max-width:65%;max-height:70%;object-fit:contain;
-      transition:transform .4s;filter:drop-shadow(0 4px 12px rgba(0,0,0,.08));
-    }
-    .card:hover .card-img img{transform:scale(1.06);}
+.c1{background:linear-gradient(168deg,#F5EDE6,#EDE4DA);}
+.c1 .nm{color:var(--rose);}
+.c1 .cl{position:absolute;bottom:0;left:0;right:0;z-index:2;}
+.c1 .cl .cn,.c1 .cl .nm{color:rgba(255,255,255,.92);}
+.c2{background:linear-gradient(168deg,#EEF3F6,#E4ECF0);}
+.c2 .nm{color:var(--sky);}
+.c3{background:linear-gradient(168deg,#F0EDE4,#ECE8DA);}
+.c3 .nm{color:var(--honey);}
+.c4{background:linear-gradient(168deg,#EDF2E8,#E4EBD8);}
+.c4 .nm{color:var(--forest);}
 
-    /* Card photo (pilates) */
-    .card-photo{object-fit:cover!important;max-width:100%!important;max-height:100%!important;
-      width:100%!important;height:100%!important;position:absolute;inset:0;
-      filter:none!important;}
-    .card-photo-overlay{
-      position:absolute;inset:0;
-      background:linear-gradient(0deg,rgba(0,0,0,.35) 0%,transparent 50%);
-      z-index:1;
-    }
+/* ═══ OVERLAYS ═══ */
+.ov{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;}
+.ov.open{display:flex;background:rgba(244,246,240,.96);
+  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);}
+.oi{max-width:500px;width:92%;max-height:88vh;overflow-y:auto;
+  opacity:0;transform:scale(.96) translateY(16px);
+  transition:all .45s cubic-bezier(.16,1,.3,1);padding:2.5rem 1.5rem;}
+.ov.open .oi{opacity:1;transform:scale(1) translateY(0);}
+.oi::-webkit-scrollbar{width:3px;}
+.oi::-webkit-scrollbar-thumb{background:rgba(58,90,58,.08);border-radius:3px;}
+.oh{text-align:center;margin-bottom:1.2rem;}
+.oh h2{font-family:var(--f1);font-size:1.7rem;font-weight:400;color:var(--forest);}
+.oh .os{font-family:var(--fm);font-size:.46rem;letter-spacing:.1em;
+  text-transform:uppercase;margin-top:.25rem;}
+.osr{color:var(--rose);}.oss{color:var(--sky);}.osh{color:var(--honey);}.osf{color:var(--forest-lt);}
+.ob{max-width:420px;margin:0 auto;}
+.ob p{font-family:var(--f2);font-size:.72rem;color:var(--warm);
+  line-height:1.85;margin-bottom:.6rem;}
+.ob strong{color:var(--forest);font-weight:700;}
+.ob em{color:var(--sage);font-style:italic;}
+.ob .sn{font-family:var(--fm);font-size:.58rem;color:var(--fog);}
+.ohr{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:1.2rem 0;}
+.ob ul{list-style:none;padding:0;}
+.ob ul li{font-family:var(--f2);padding:.45rem 0;font-size:.68rem;color:var(--warm);
+  border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:.45rem;line-height:1.6;}
+.ob ul li::before{content:'·';color:var(--sage);font-size:1.1rem;line-height:1;
+  flex-shrink:0;margin-top:-.1rem;}
+.oq{font-family:var(--f1);font-style:italic;font-size:1rem;font-weight:300;
+  color:var(--forest);text-align:center;padding:.8rem .5rem;margin:1.2rem 0 .2rem;
+  border-top:1px solid rgba(58,90,58,.08);border-bottom:1px solid rgba(58,90,58,.08);}
+.oqa{font-family:var(--fm);font-size:.42rem;color:var(--fog);text-align:center;}
+.og{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.2rem;}
+.og img{width:100%;object-fit:cover;border-radius:8px;transition:transform .35s;}
+.og img:hover{transform:scale(1.015);}
+.og img:nth-child(1){grid-column:1/3;height:240px;object-position:center 20%;}
+.og img:nth-child(n+2){height:160px;}
+.og img:nth-child(2){object-position:center 15%;}
+.og img:nth-child(3){object-position:center 25%;}
+.og img:nth-child(4){object-position:center 15%;}
+.oca{text-align:center;margin-top:1.4rem;}
+.obtn{font-family:var(--fm);font-size:.5rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--fog);background:none;border:1px solid rgba(58,90,58,.12);
+  border-radius:20px;cursor:pointer;padding:.45rem 1.2rem;transition:all .3s;}
+.obtn:hover{color:var(--forest);border-color:var(--sage);background:var(--sage-mist);}
 
-    /* Card label */
-    .card-label{
-      padding:.6rem .8rem;display:flex;align-items:baseline;gap:.4rem;
-    }
-    .card-label .num{font-family:var(--f2);font-size:.4rem;color:var(--fog);
-      letter-spacing:.08em;text-transform:uppercase;}
-    .card-label .name{font-family:var(--f1);font-style:italic;font-size:1.05rem;}
-
-    /* Card specific colors */
-    .card-pilates{background:linear-gradient(170deg,#F5EDE6,#EDE4DA);}
-    .card-pilates .name{color:var(--rose);}
-    .card-pilates .card-label{position:absolute;bottom:0;left:0;right:0;z-index:2;}
-    .card-pilates .card-label .num,.card-pilates .card-label .name{color:rgba(255,255,255,.9);}
-
-    .card-reading{background:linear-gradient(170deg,#EEF3F6,#E4ECF0);}
-    .card-reading .name{color:var(--sky);}
-
-    .card-about{background:linear-gradient(170deg,#F0EDE4,#ECE8DA);}
-    .card-about .name{color:var(--honey);}
-
-    .card-apple{background:linear-gradient(170deg,#F5F0EA,#EDE6DC);}
-    .card-apple .name{color:var(--rose);}
-
-    /* ═══ OVERLAYS ═══ */
-    .ov{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;}
-    .ov.open{display:flex;background:rgba(244,246,240,.95);backdrop-filter:blur(24px);}
-    .ov-in{max-width:480px;width:92%;max-height:85vh;overflow-y:auto;
-      opacity:0;transform:scale(.96) translateY(14px);
-      transition:all .4s cubic-bezier(.16,1,.3,1);padding:2rem 1.2rem;}
-    .ov.open .ov-in{opacity:1;transform:scale(1) translateY(0);}
-    .ov-hd{text-align:center;margin-bottom:1rem;}
-    .ov-hd h2{font-family:var(--f1);font-size:1.6rem;font-weight:400;color:var(--forest);}
-    .ov-sub{font-family:var(--f2);font-size:.48rem;letter-spacing:.08em;
-      text-transform:uppercase;margin-top:.2rem;}
-    .ov-sr{color:var(--rose);}.ov-ss{color:var(--sky);}.ov-sh{color:var(--honey);}
-    .ov-bd{max-width:400px;margin:0 auto;}
-    .ov-bd p{font-family:var(--f2);font-size:.72rem;color:var(--warm);
-      line-height:1.75;margin-bottom:.5rem;font-weight:300;}
-    .ov-bd strong{color:var(--forest);font-weight:500;}
-    .ov-bd em{color:var(--sage);}
-    .ov-hr{height:1px;background:rgba(58,90,58,.06);margin:1rem 0;}
-    .ov-bd ul{list-style:none;padding:0;}
-    .ov-bd ul li{font-family:var(--f2);padding:.4rem 0;font-size:.68rem;color:var(--warm);
-      font-weight:300;border-bottom:1px solid rgba(58,90,58,.04);
-      display:flex;align-items:flex-start;gap:.4rem;}
-    .ov-bd ul li::before{content:'·';color:var(--sage);font-size:1rem;line-height:1;flex-shrink:0;}
-    .ov-qt{font-family:var(--f1);font-style:italic;font-size:.95rem;font-weight:300;
-      color:var(--forest);text-align:center;padding:.7rem .4rem;margin:1rem 0;
-      border-top:1px solid rgba(58,90,58,.08);border-bottom:1px solid rgba(58,90,58,.08);}
-    .ov-qa{font-family:var(--f2);font-size:.42rem;color:var(--fog);text-align:center;}
-    .ov-cl{text-align:center;margin-top:1rem;}
-    .ov-btn{font-family:var(--f2);font-size:.52rem;letter-spacing:.06em;
-      text-transform:uppercase;color:var(--fog);background:none;
-      border:1px solid rgba(58,90,58,.1);border-radius:16px;
-      cursor:none;padding:.4rem 1rem;transition:all .25s;}
-    .ov-btn:hover{color:var(--forest);border-color:var(--sage);background:rgba(139,175,120,.06);}
-    .ov-in::-webkit-scrollbar{width:3px;}
-    .ov-in::-webkit-scrollbar-thumb{background:rgba(58,90,58,.06);border-radius:3px;}
-
-    /* PHOTO GALLERY */
-    .ov-gallery{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem;}
-    .ov-gallery img{width:100%;object-fit:cover;border-radius:6px;transition:transform .3s;cursor:none;}
-    .ov-gallery img:hover{transform:scale(1.02);}
-    .ov-gallery img:nth-child(1){grid-column:1/3;height:240px;object-position:center 20%;}
-    .ov-gallery img:nth-child(2){height:160px;object-position:center 15%;}
-    .ov-gallery img:nth-child(3){height:160px;object-position:center 25%;}
-    .ov-gallery img:nth-child(4){height:160px;object-position:center 15%;}
-
-    @media(max-width:860px){
-      body{height:auto;overflow-y:auto;cursor:default;}
-      .page{flex-direction:column;height:auto;}
-      .left{width:100%;min-width:auto;padding:2rem 1.5rem 1.5rem;border-right:none;
-        border-bottom:1px solid rgba(58,90,58,.04);}
-      .right{padding:1.5rem;grid-template-columns:1fr;grid-template-rows:auto;height:auto;}
-      .card{min-height:200px;}
-    }
-  </style>
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:1024px){
+  .pl{width:340px;min-width:280px;padding:2.5rem 2rem 2rem;}
+  .pl h1{font-size:2.2rem;}
+  .pr{padding:2.5rem 2rem 3rem;}
+  .sg{gap:1.1rem;}
+  .cd{min-height:220px;}
+}
+@media(max-width:860px){
+  .page{flex-direction:column;min-height:auto;}
+  .pl{width:100%;min-width:auto;position:relative;height:auto;
+    padding:2.5rem 2rem 2rem;border-right:none;
+    border-bottom:1px solid var(--border);text-align:center;}
+  .pl h1{font-size:2.4rem;}
+  .pl-desc{max-width:480px;margin:0 auto;text-align:center;}
+  .tw{align-items:center;}
+  .pl-nav{flex-direction:row;justify-content:center;gap:1.2rem;margin-top:1rem;}
+  .pl-nav a:hover{transform:translateX(0) translateY(-1px);}
+  .pl-cp{text-align:center;}
+  .pr{padding:2rem 1.8rem 3rem;}
+  .sg{max-width:560px;margin:0 auto;}
+  .cd{min-height:240px;}
+}
+@media(max-width:560px){
+  .pl{padding:2rem 1.5rem 1.5rem;}
+  .pl h1{font-size:1.9rem;}
+  .tt{font-size:.82rem;}
+  .pl-desc{font-size:.52rem;}
+  .pr{padding:1.5rem 1.2rem 3rem;}
+  .sg{grid-template-columns:1fr;gap:1rem;}
+  .cd{min-height:200px;}
+  .oi{padding:1.8rem 1rem;}
+  .og img:nth-child(1){height:180px;}
+  .og img:nth-child(n+2){height:120px;}
+}
+@keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.an{opacity:0;animation:fu .65s ease forwards;}
+.d1{animation-delay:.08s}.d2{animation-delay:.18s}.d3{animation-delay:.28s}
+.d4{animation-delay:.38s}.d5{animation-delay:.48s}.d6{animation-delay:.58s}
+.d7{animation-delay:.68s}.d8{animation-delay:.78s}
+</style>
 </head>
 <body>
 
-  <div class="aurora"></div>
-  <div id="nature"></div>
-  <div class="cur" id="cur"></div>
+<div id="nc"><div class="aurora"></div></div>
 
-  <div class="page">
-
-    <!-- LEFT -->
-    <div class="left">
-      <div class="left-top">
-        <h1>Cabinet of<br><em>Curiosities</em></h1>
-        <p class="left-sub">bella kang · an arboretum of ideas</p>
-        <p class="left-quote">"The mind is not a vessel to be filled, but a fire to be kindled."</p>
-        <p class="left-attr">— Plutarch</p>
-        <p class="left-desc">An arboretum is a living archive — a space where plants are not simply displayed, but allowed to grow, shift, and reveal themselves over time. This blog is my version of that space: a collection of ideas in progress, rooted, branching, and still becoming.</p>
+<div class="page">
+  <div class="pl">
+    <div>
+      <h1 class="an d1">Cabinet of<br><em>Curiosities</em></h1>
+      <p class="pl-sub an d2">bella kang · an arboretum of ideas</p>
+      <div class="tw an d3">
+        <span class="tt" id="tEl"><span class="bl"></span></span>
+        <span class="ta" id="tAt"></span>
       </div>
-      <div>
-        <div class="left-nav">
-          <a href="index.html">portfolio ←</a>
-          <a href="https://github.com/bellakang017" target="_blank">github ↗</a>
-          <a href="https://www.linkedin.com/in/bellakang017" target="_blank">linkedin ↗</a>
-        </div>
-        <p class="left-copy">© 2026 Bella Kang</p>
-      </div>
+      <p class="pl-desc an d4">An arboretum is a living archive — a space where plants are not simply displayed, but allowed to grow, shift, and reveal themselves over time. This blog is my version of that space: a collection of ideas in progress, rooted, branching, and still becoming.</p>
     </div>
-
-    <!-- RIGHT GRID -->
-    <div class="right">
-
-      <!-- Pilates (photo) -->
-      <div class="card card-pilates" onclick="openOv('pilates')">
-        <div class="card-img">
-          <img class="card-photo" src="images/pilates-1.jpg" alt="">
-          <div class="card-photo-overlay"></div>
-        </div>
-        <div class="card-label">
-          <span class="num">Specimen I ·</span>
-          <span class="name">Avis Corporis</span>
-        </div>
+    <div class="an d5">
+      <div class="pl-nav">
+        <a href="https://bellakang017.github.io/">portfolio ←</a>
+        <a href="https://github.com/bellakang017" target="_blank">github ↗</a>
+        <a href="https://www.linkedin.com/in/bellakang017" target="_blank">linkedin ↗</a>
       </div>
-
-      <!-- Reading (blue lotus) -->
-      <div class="card card-reading" onclick="openOv('reading')">
-        <div class="card-img">
-          <img src="images/lotus-blue.png" alt="">
-        </div>
-        <div class="card-label">
-          <span class="num">Specimen II ·</span>
-          <span class="name">Malum Scientiae</span>
-        </div>
-      </div>
-
-      <!-- About (pink lotus) -->
-      <div class="card card-about" onclick="openOv('about')">
-        <div class="card-img">
-          <img src="images/lotus-pink.png" alt="">
-        </div>
-        <div class="card-label">
-          <span class="num">Specimen III ·</span>
-          <span class="name">Arbor Vitae</span>
-        </div>
-      </div>
-
-      <!-- Apple (glass apple) -->
-      <div class="card card-apple" onclick="openOv('apple')">
-        <div class="card-img">
-          <img src="images/green-apple-clover.png" alt="">
-        </div>
-        <div class="card-label">
-          <span class="num">Specimen IV ·</span>
-          <span class="name">Green Apple Logic</span>
-        </div>
-      </div>
-
+      <p class="pl-cp">© 2026 Bella Kang</p>
     </div>
   </div>
 
-  <!-- OVERLAYS -->
-  <div class="ov" id="ov-pilates" onclick="closeOv('pilates',event)">
-    <div class="ov-in" onclick="event.stopPropagation()">
-      <div class="ov-hd"><h2>Pilates & Movement</h2><p class="ov-sub ov-sr">Specimen I · Embodied Practice</p></div>
-      <div class="ov-gallery">
-        <img src="images/pilates-1.jpg" alt="">
-        <img src="images/pilates-2.jpg" alt="">
-        <img src="images/pilates-3.jpg" alt="">
-        <img src="images/pilates-4.jpg" alt="">
+  <div class="pr">
+    <div class="sg">
+      <div class="cd c1 an d5" onclick="openOv('pilates')">
+        <div class="ci"><img class="cp" src="images/pilates-1.jpg" alt="Pilates"><div class="cpo"></div></div>
+        <div class="cl"><span class="cn">Specimen I ·</span><span class="nm">Avis Corporis</span></div>
       </div>
-      <div class="ov-bd">
-        <p>I started Pilates because I was tired all the time and my body felt like it didn't belong to me. I thought it would just be exercise. It wasn't.</p>
-        <p>The first thing I learned was how to breathe. Not the kind you do automatically — the kind where you feel your ribs expand, where exhale becomes a decision. That changed everything.</p>
-        <p>Then came alignment. Not "stand up straight" alignment — the kind where you realize your body has been compensating for years, holding tension in places you didn't know existed. Pilates taught me to notice.</p>
-        <p>I got certified because I wanted to teach other people that feeling. The moment your body clicks into place and you think: <em>oh, I've been working so hard to hold myself wrong.</em></p>
-        <div class="ov-hr"></div>
-        <p>Now it's part of how I think about research. Behavior change isn't about willpower. It's about noticing what's already happening in your body and choosing differently. One breath at a time.</p>
-        <div class="ov-qt">"Research is formalized curiosity. It is poking and prying with a purpose."</div>
-        <p class="ov-qa">— Zora Neale Hurston</p>
+      <div class="cd c2 an d6" onclick="openOv('reading')">
+        <div class="ci"><img src="images/lotus-blue.png" alt="Reading Group"></div>
+        <div class="cl"><span class="cn">Specimen II ·</span><span class="nm">Malum Scientiae</span></div>
       </div>
-      <div class="ov-cl"><button class="ov-btn" onclick="closeOv('pilates')">← back to arboretum</button></div>
+      <div class="cd c3 an d7" onclick="openOv('about')">
+        <div class="ci"><img src="images/lotus-pink.png" alt="About Bella"></div>
+        <div class="cl"><span class="cn">Specimen III ·</span><span class="nm">Arbor Vitae</span></div>
+      </div>
+      <div class="cd c4 an d8" onclick="openOv('apple')">
+        <div class="ci"><img src="images/green-apple-clover.png" alt="Green Apple Logic"></div>
+        <div class="cl"><span class="cn">Specimen IV ·</span><span class="nm">Green Apple Logic</span></div>
+      </div>
     </div>
   </div>
+</div>
 
-  <div class="ov" id="ov-reading" onclick="closeOv('reading',event)">
-    <div class="ov-in" onclick="event.stopPropagation()">
-      <div class="ov-hd"><h2>Saturday Reading Group</h2><p class="ov-sub ov-ss">Specimen II · Community · Weekly</p></div>
-      <div class="ov-bd">
-        <p>It started because I wanted to read more but never did. So I made it social — Saturday mornings, tea, one book at a time.</p>
-        <p>We read things about the body, about mindset, about how stress lives in your muscles. Then we talk about it. Sometimes we argue. Mostly we just notice things we missed the first time.</p>
-        <div class="ov-hr"></div>
-        <p><strong>Currently reading:</strong></p>
-        <ul><li><strong>Core Awareness</strong> by Liz Koch — about the psoas and how your body holds onto things you thought you forgot</li></ul>
-        <p><strong>Previously:</strong></p>
-        <ul>
-          <li><strong>Mindset</strong> by Carol Dweck</li>
-          <li><strong>The Body Keeps the Score</strong> by Bessel van der Kolk</li>
-          <li><strong>Thinking, Fast and Slow</strong> by Daniel Kahneman</li>
-        </ul>
-        <div class="ov-qt">"I have no special talent. I am only passionately curious."</div>
-        <p class="ov-qa">— Albert Einstein</p>
-      </div>
-      <div class="ov-cl"><button class="ov-btn" onclick="closeOv('reading')">← back to arboretum</button></div>
+<!-- OVERLAYS -->
+<div class="ov" id="ov-pilates" onclick="closeOv('pilates',event)">
+  <div class="oi" onclick="event.stopPropagation()">
+    <div class="oh"><h2>Pilates & Movement</h2><p class="os osr">Specimen I · Embodied Practice</p></div>
+    <div class="og">
+      <img src="images/pilates-1.jpg" alt=""><img src="images/pilates-2.jpg" alt="">
+      <img src="images/pilates-3.jpg" alt=""><img src="images/pilates-4.jpg" alt="">
     </div>
-  </div>
-
-  <div class="ov" id="ov-about" onclick="closeOv('about',event)">
-    <div class="ov-in" onclick="event.stopPropagation()">
-      <div class="ov-hd"><h2>About Bella</h2><p class="ov-sub ov-sh">Specimen III · Cross-Cultural</p></div>
-      <div class="ov-bd">
-        <p>I grew up moving between countries. Each place had a different idea of what "taking care of yourself" meant. In Korea it's one thing. Somewhere else, completely different.</p>
-        <p>That gap is what got me into health communication. When a health message doesn't land, it's usually not because people don't care. It's because the message wasn't made for their world.</p>
-        <div class="ov-hr"></div>
-        <ul>
-          <li>Bilingual — English and Korean</li>
-          <li>Certified Pilates instructor</li>
-          <li>MA Advertising at UT Austin, headed toward a PhD</li>
-          <li>Favorite filmmaker: Park Chan-wook — precision is everything</li>
-        </ul>
-        <div class="ov-qt">"Look deep into nature, and then you will understand everything better."</div>
-        <p class="ov-qa">— Albert Einstein</p>
-      </div>
-      <div class="ov-cl"><button class="ov-btn" onclick="closeOv('about')">← back to arboretum</button></div>
+    <div class="ob">
+      <p>I started Pilates because I was tired all the time and my body felt like it didn't belong to me. I thought it would just be exercise. It wasn't.</p>
+      <p>The first thing I learned was how to breathe. Not the kind you do automatically — the kind where you feel your ribs expand, where exhale becomes a decision. That changed everything.</p>
+      <p>Then came alignment. Not "stand up straight" alignment — the kind where you realize your body has been compensating for years, holding tension in places you didn't know existed. Pilates taught me to notice.</p>
+      <p>I got certified because I wanted to teach other people that feeling. The moment your body clicks into place and you think: <em>oh, I've been working so hard to hold myself wrong.</em></p>
+      <div class="ohr"></div>
+      <p>Now it's part of how I think about research. Behavior change isn't about willpower. It's about noticing what's already happening in your body and choosing differently. One breath at a time.</p>
+      <div class="oq">"Research is formalized curiosity. It is poking and prying with a purpose."</div>
+      <p class="oqa">— Zora Neale Hurston</p>
     </div>
+    <div class="oca"><button class="obtn" onclick="closeOv('pilates')">← back to arboretum</button></div>
   </div>
+</div>
 
-  <div class="ov" id="ov-apple" onclick="closeOv('apple',event)">
-    <div class="ov-in" onclick="event.stopPropagation()">
-      <div class="ov-hd"><h2>Green Apple Logic</h2><p class="ov-sub ov-sr">Specimen IV · Design Principle</p></div>
-      <div class="ov-bd">
-        <p>Spring 2012. Seoul, South Korea</p>
-        <p>Before going to the English academy (typical 10 years old Korean after-school activity) , I sat on the windowsill with a vocabulary in one hand and a green apple in the other. My mom had bought them — each one wrapped in plastic, stacked inside the refridgerator</p>
-        <p>Cold. Crisp. Sour enough to wake my mouth up. A warm breeze came through the window.</p>
-        <p>She never once told me to eat fruit. She just put them in the fridge. I reached in when I was hungry. That was all.</p>
-        <div class="ov-hr"></div>
-        <p>Ten years later, a professor showed a stat in class. Eighty percent of smokers already know smoking is bad for them. Information was never the problem.</p>
-        <p>That's when the window came back. The apple. My mom. She never said "Vitamin C is important." She bought the apples, put them where I could reach them, and let me decide. <em>That was the communication.</em></p>
-        <div class="ov-hr"></div>
-        <p>Green apple logic is one principle: <strong>make the healthy choice the easy choice.</strong></p>
-        <p>Not persuasion — design. Not a campaign — a counter. Not a billboard — a bowl.</p>
-        <p>My research starts with one question: <em>How do you put a green apple in everyone's refridgerator?</em></p>
-        <div class="ov-qt">"Satisfaction of one's curiosity is one of the greatest sources of happiness in life."</div>
-        <p class="ov-qa">— Linus Pauling</p>
-      </div>
-      <div class="ov-cl"><button class="ov-btn" onclick="closeOv('apple')">← back to arboretum</button></div>
+<div class="ov" id="ov-reading" onclick="closeOv('reading',event)">
+  <div class="oi" onclick="event.stopPropagation()">
+    <div class="oh"><h2>Saturday Reading Group</h2><p class="os oss">Specimen II · Community · Weekly</p></div>
+    <div class="ob">
+      <p>It started because I wanted to read more but never did. So I made it social — Saturday mornings, tea, one book at a time.</p>
+      <p>We read things about the body, about mindset, about how stress lives in your muscles. Then we talk about it. Sometimes we argue. Mostly we just notice things we missed the first time.</p>
+      <div class="ohr"></div>
+      <p><strong>Currently reading:</strong></p>
+      <ul><li><strong>Core Awareness</strong> by Liz Koch — about the psoas and how your body holds onto things you thought you forgot</li></ul>
+      <p><strong>Previously:</strong></p>
+      <ul>
+        <li><strong>Mindset</strong> by Carol Dweck</li>
+        <li><strong>The Body Keeps the Score</strong> by Bessel van der Kolk</li>
+        <li><strong>Thinking, Fast and Slow</strong> by Daniel Kahneman</li>
+      </ul>
+      <div class="oq">"I have no special talent. I am only passionately curious."</div>
+      <p class="oqa">— Albert Einstein</p>
     </div>
+    <div class="oca"><button class="obtn" onclick="closeOv('reading')">← back to arboretum</button></div>
   </div>
+</div>
 
-  <script>
-    // Cursor
-    var c=document.getElementById('cur'),mx=0,my=0,cx=0,cy=0,ts=[];
-    for(var i=0;i<4;i++){var d=document.createElement('div');d.className='trl';
-      var sz=14+i*6;d.style.width=sz+'px';d.style.height=sz+'px';
-      d.style.opacity=(.08-i*.015);document.body.appendChild(d);ts.push({el:d,x:0,y:0});}
-    document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
-    (function a(){cx+=(mx-cx)*.2;cy+=(my-cy)*.2;
-      c.style.transform='translate('+(cx-6)+'px,'+(cy-6)+'px)';
-      for(var i=0;i<ts.length;i++){var t=i===0?{x:mx,y:my}:ts[i-1];
-        var sp=.055-i*.01;ts[i].x+=(t.x-ts[i].x)*sp;ts[i].y+=(t.y-ts[i].y)*sp;
-        var s=parseInt(ts[i].el.style.width);
-        ts[i].el.style.transform='translate('+(ts[i].x-s/2)+'px,'+(ts[i].y-s/2)+'px)';}
-      requestAnimationFrame(a);})();
-    document.querySelectorAll('a,button,.card').forEach(function(e){
-      e.addEventListener('mouseenter',function(){c.classList.add('hov');});
-      e.addEventListener('mouseleave',function(){c.classList.remove('hov');});});
+<div class="ov" id="ov-about" onclick="closeOv('about',event)">
+  <div class="oi" onclick="event.stopPropagation()">
+    <div class="oh"><h2>About Bella</h2><p class="os osh">Specimen III · Cross-Cultural</p></div>
+    <div class="ob">
+      <p>I grew up moving between countries. Each place had a different idea of what "taking care of yourself" meant. In Korea it's one thing. Somewhere else, completely different.</p>
+      <p>That gap is what got me into health communication. When a health message doesn't land, it's usually not because people don't care. It's because the message wasn't made for their world.</p>
+      <div class="ohr"></div>
+      <ul>
+        <li>Bilingual — English and Korean</li>
+        <li>Certified Pilates instructor</li>
+        <li>MA Advertising at UT Austin, headed toward a PhD</li>
+        <li>Favorite filmmaker: Park Chan-wook — precision is everything</li>
+      </ul>
+      <div class="oq">"Look deep into nature, and then you will understand everything better."</div>
+      <p class="oqa">— Albert Einstein</p>
+    </div>
+    <div class="oca"><button class="obtn" onclick="closeOv('about')">← back to arboretum</button></div>
+  </div>
+</div>
 
-    // Nature
-    (function(){var n=document.getElementById('nature');
-      for(var i=0;i<3;i++){var b=document.createElement('div');b.className='fly-bird';
-        b.style.top=(8+Math.random()*25)+'%';
-        b.style.animationDuration=(20+Math.random()*14)+'s';
-        b.style.animationDelay=(Math.random()*22)+'s';
-        n.appendChild(b);}
-      var pc=['rgba(212,146,142,.3)','rgba(194,216,180,.25)','rgba(232,180,176,.2)',
-        'rgba(180,204,164,.25)'];
-      for(var j=0;j<6;j++){var p=document.createElement('div');p.className='petal';
-        p.style.left=(10+Math.random()*80)+'%';
-        p.style.background=pc[Math.floor(Math.random()*pc.length)];
-        p.style.animationDuration=(12+Math.random()*10)+'s';
-        p.style.animationDelay=(Math.random()*16)+'s';
-        var ps=4+Math.random()*4;p.style.width=ps+'px';p.style.height=(ps*1.3)+'px';
-        n.appendChild(p);}})();
+<div class="ov" id="ov-apple" onclick="closeOv('apple',event)">
+  <div class="oi" onclick="event.stopPropagation()">
+    <div class="oh"><h2>Green Apple Logic</h2><p class="os osf">Specimen IV · Design Principle</p></div>
+    <div class="ob">
+      <p class="sn">Spring 2012. Seoul, South Korea.</p>
+      <p>Before going to the English academy (typical 10 years old Korean after-school activity), I sat on the windowsill with a vocabulary in one hand and a green apple in the other. My mom had bought them — each one wrapped in plastic, stacked inside the refrigerator.</p>
+      <p>Cold. Crisp. Sour enough to wake my mouth up. A warm breeze came through the window.</p>
+      <p>She never once told me to eat fruit. She just put them in the fridge. I reached in when I was hungry. That was all.</p>
+      <div class="ohr"></div>
+      <p>Ten years later, a professor showed a stat in class. Eighty percent of smokers already know smoking is bad for them. Information was never the problem.</p>
+      <p>That's when the window came back. The apple. My mom. She never said "Vitamin C is important." She bought the apples, put them where I could reach them, and let me decide. <em>That was the communication.</em></p>
+      <div class="ohr"></div>
+      <p>Green apple logic is one principle: <strong>make the healthy choice the easy choice.</strong></p>
+      <p>Not persuasion — design. Not a campaign — a counter. Not a billboard — a bowl.</p>
+      <p>My research starts with one question: <em>How do you put a green apple in everyone's refrigerator?</em></p>
+      <div class="oq">"Satisfaction of one's curiosity is one of the greatest sources of happiness in life."</div>
+      <p class="oqa">— Linus Pauling</p>
+    </div>
+    <div class="oca"><button class="obtn" onclick="closeOv('apple')">← back to arboretum</button></div>
+  </div>
+</div>
 
-    // Overlays
-    function openOv(id){var e=document.getElementById('ov-'+id);
-      e.style.display='flex';requestAnimationFrame(function(){e.classList.add('open');});}
-    function closeOv(id,e){
-      if(e&&e.target!==e.currentTarget&&!e.target.classList.contains('ov-btn'))return;
-      var el=document.getElementById('ov-'+id);el.classList.remove('open');
-      setTimeout(function(){el.style.display='none';},400);}
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'){
-      document.querySelectorAll('.ov.open').forEach(function(o){
-        o.classList.remove('open');setTimeout(function(){o.style.display='none';},400);});}});
-  </script>
+<script>
+/* ═══ TYPING ═══ */
+var qs=[
+  {t:'"The mind is not a vessel to be filled, but a fire to be kindled."',a:'— Plutarch'},
+  {t:'"一期一會 — every encounter, once in a lifetime"',a:''},
+  {t:'"heal the conditions, not just the symptoms"',a:'— holistic principle'},
+  {t:'"the body holds information the mind doesn\'t always articulate"',a:''},
+  {t:'"only the river knows where it is going"',a:'— after Hermann Hesse'},
+  {t:'"自利利他 — benefiting self, benefiting others"',a:''},
+  {t:'"environments can be designed for healing"',a:''},
+  {t:'"green apple logic — make the healthy choice the easy choice"',a:''},
+  {t:'"you must find your own room to think in"',a:'— after Virginia Woolf'},
+  {t:'"轉迷開悟 — turn confusion into awakening"',a:''},
+  {t:'"Growth is not linear. Neither is research."',a:''},
+  {t:'"사람이 먼저다 — people come first"',a:''},
+  {t:'"neuroplasticity is hope, written in biology"',a:''},
+  {t:'"以心傳心 — mind to mind, beyond words"',a:''},
+  {t:'"what if the intervention is the environment itself?"',a:''}
+];
+var qi=0,ci=0,del=false;
+var tE=document.getElementById('tEl'),aE=document.getElementById('tAt');
+function tL(){var q=qs[qi],b='<span class="bl"></span>';
+  if(!del){ci++;tE.innerHTML=q.t.substring(0,ci)+b;aE.textContent='';
+    if(ci===q.t.length){aE.textContent=q.a;setTimeout(function(){del=true;tL();},3500);return;}
+    setTimeout(tL,38+Math.random()*28);
+  }else{ci--;tE.innerHTML=q.t.substring(0,ci)+b;
+    if(ci<=0){del=false;aE.textContent='';qi=(qi+1)%qs.length;setTimeout(tL,700);return;}
+    setTimeout(tL,18);}}
+setTimeout(tL,1800);
+
+/* ═══ NATURE ═══ */
+(function(){var c=document.getElementById('nc');
+  for(var i=0;i<3;i++){var b=document.createElement('div');b.className='fly-bird';
+    b.style.top=(6+Math.random()*22)+'%';b.style.animationDuration=(22+Math.random()*16)+'s';
+    b.style.animationDelay=(Math.random()*24)+'s';c.appendChild(b);}
+  var pc=['rgba(212,146,142,.25)','rgba(194,216,180,.2)','rgba(232,180,176,.18)','rgba(180,204,164,.22)'];
+  for(var j=0;j<6;j++){var p=document.createElement('div');p.className='petal';
+    p.style.left=(8+Math.random()*84)+'%';p.style.background=pc[Math.floor(Math.random()*pc.length)];
+    p.style.animationDuration=(14+Math.random()*12)+'s';p.style.animationDelay=(Math.random()*18)+'s';
+    var ps=3.5+Math.random()*4;p.style.width=ps+'px';p.style.height=(ps*1.3)+'px';c.appendChild(p);}
+  for(var k=0;k<8;k++){var g=document.createElement('div');g.className='gp';
+    var gs=4+Math.random()*8;g.style.width=gs+'px';g.style.height=gs+'px';
+    g.style.left=(5+Math.random()*90)+'%';g.style.top=(5+Math.random()*90)+'%';
+    g.style.animationDuration=(6+Math.random()*8)+'s';g.style.animationDelay=(Math.random()*6)+'s';
+    c.appendChild(g);}})();
+
+/* ═══ OVERLAYS ═══ */
+function openOv(id){var e=document.getElementById('ov-'+id);
+  e.style.display='flex';requestAnimationFrame(function(){e.classList.add('open');});
+  document.body.style.overflow='hidden';}
+function closeOv(id,e){
+  if(e&&e.target!==e.currentTarget&&!e.target.classList.contains('obtn'))return;
+  var el=document.getElementById('ov-'+id);el.classList.remove('open');
+  setTimeout(function(){el.style.display='none';},400);document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){
+  document.querySelectorAll('.ov.open').forEach(function(o){
+    o.classList.remove('open');setTimeout(function(){o.style.display='none';},400);});
+  document.body.style.overflow='';}});
+</script>
 </body>
 </html>
