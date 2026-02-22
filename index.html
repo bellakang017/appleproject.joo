@@ -131,7 +131,7 @@
     .spec-text .attr{font-family:var(--f2);font-size:.44rem;color:var(--fog);}
 
     /* BIRD/PILATES — photo */
-    .bird-vis{height:340px;background:url('images/pilates-1.jpg') center/cover;}
+    .bird-vis{height:340px;background:url('images/pilates-1.jpg') center 20%/cover;}
     .bird-vis .lat-color{color:var(--rose);}
 
     /* APPLE — CSS */
@@ -190,10 +190,13 @@
 
     /* PHOTO GALLERY */
     .ov-gallery{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem;}
-    .ov-gallery img{width:100%;height:140px;object-fit:cover;border-radius:6px;
+    .ov-gallery img{width:100%;object-fit:cover;border-radius:6px;
       transition:transform .3s;cursor:none;}
-    .ov-gallery img:hover{transform:scale(1.03);}
-    .ov-gallery img:first-child{grid-column:1/3;height:200px;}
+    .ov-gallery img:hover{transform:scale(1.02);}
+    .ov-gallery img:nth-child(1){grid-column:1/3;height:260px;object-position:center 20%;}
+    .ov-gallery img:nth-child(2){height:170px;object-position:center 15%;}
+    .ov-gallery img:nth-child(3){height:170px;object-position:center 25%;}
+    .ov-gallery img:nth-child(4){height:170px;object-position:center 15%;}
 
     /* OVERLAYS */
     .ov{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;}
@@ -263,7 +266,7 @@
       <div class="spec-text">
         <p class="lat" style="color:var(--rose)">Avis Corporis</p>
         <p class="sub">Specimen I · Movement · Embodied Practice</p>
-        <p class="desc">The body adapts through challenge — not despite it, but because of it. As a certified Pilates instructor, I study how iterative physical practice builds proprioceptive awareness and reshapes neural pathways.</p>
+        <p class="desc">I started because I was exhausted and disconnected from my own body. Pilates taught me to breathe on purpose, to find alignment I didn't know I was missing. Now I'm a certified instructor — because I wanted other people to feel that click too.</p>
         <p class="quote">"Research is formalized curiosity. It is poking and prying with a purpose."</p>
         <p class="attr">— Zora Neale Hurston</p>
       </div>
@@ -283,7 +286,7 @@
       <div class="spec-text">
         <p class="lat" style="color:var(--sky)">Malum Scientiae</p>
         <p class="sub">Specimen II · Knowledge · Saturday Reading Group</p>
-        <p class="desc">Every Saturday, a small group gathers to read and discuss books at the intersection of body, mind, and behavior change. We sit with ideas until they ripen.</p>
+        <p class="desc">Every Saturday morning, a few of us get together with tea and a book. We read slowly — things about the body, about how people change, about why we do what we do. No rush. We just sit with it.</p>
         <p class="quote">"I have no special talent. I am only passionately curious."</p>
         <p class="attr">— Albert Einstein</p>
       </div>
@@ -301,7 +304,7 @@
       <div class="spec-text">
         <p class="lat" style="color:var(--honey)">Arbor Vitae</p>
         <p class="sub">Specimen III · Roots · Cross-Cultural</p>
-        <p class="desc">I grew up between multiple countries. Each one taught me something different about how people understand health, communicate needs, and make sense of their bodies. Roots in many soils, branches reaching.</p>
+        <p class="desc">I grew up moving between countries — Korea, and beyond. Each place taught me something different about what "healthy" means, who gets to define it, and why some messages land while others don't. That's what I study now.</p>
         <p class="quote">"Look deep into nature, and then you will understand everything better."</p>
         <p class="attr">— Albert Einstein</p>
       </div>
@@ -330,16 +333,12 @@
         <img src="images/pilates-4.jpg" alt="">
       </div>
       <div class="ov-bd">
-        <p>I'm a certified Pilates instructor. This isn't separate from my research — it <em>is</em> part of it.</p>
-        <p>Understanding how the body processes stress, builds proprioceptive awareness, and adapts through iterative practice informs everything I study.</p>
+        <p>I started Pilates because I was tired all the time and my body felt like it didn't belong to me. I thought it would just be exercise. It wasn't.</p>
+        <p>The first thing I learned was how to breathe. Not the kind you do automatically — the kind where you feel your ribs expand, where exhale becomes a decision. That changed everything.</p>
+        <p>Then came alignment. Not "stand up straight" alignment — the kind where you realize your body has been compensating for years, holding tension in places you didn't know existed. Pilates taught me to notice.</p>
+        <p>I got certified because I wanted to teach other people that feeling. The moment your body clicks into place and you think: <em>oh, I've been working so hard to hold myself wrong.</em></p>
         <div class="ov-hr"></div>
-        <p><strong>What Pilates teaches me about research:</strong></p>
-        <ul>
-          <li>Small, precise adjustments compound — psychologically wise interventions (Yeager)</li>
-          <li>The body adapts through challenge, not comfort — stress reappraisal (Crum)</li>
-          <li>Neuroplasticity isn't abstract; you feel it in movement patterns (Millán)</li>
-          <li>Embodied awareness makes you a better listener — to data, to people</li>
-        </ul>
+        <p>Now it's part of how I think about research. Behavior change isn't about willpower. It's about noticing what's already happening in your body and choosing differently. One breath at a time.</p>
         <div class="ov-qt">"Never lose a holy curiosity."</div>
         <p class="ov-qa">— Albert Einstein</p>
       </div>
@@ -351,10 +350,11 @@
     <div class="ov-in" onclick="event.stopPropagation()">
       <div class="ov-hd"><h2>Saturday Reading Group</h2><p class="ov-sub ov-ss">Specimen II · Community · Weekly</p></div>
       <div class="ov-bd">
-        <p>Every Saturday, a small group gathers to read and discuss books at the intersection of body, mind, and behavior change.</p>
+        <p>It started because I wanted to read more but never did. So I made it social — Saturday mornings, tea, one book at a time.</p>
+        <p>We read things about the body, about mindset, about how stress lives in your muscles. Then we talk about it. Sometimes we argue. Mostly we just notice things we missed the first time.</p>
         <div class="ov-hr"></div>
         <p><strong>Currently reading:</strong></p>
-        <ul><li><strong>Core Awareness</strong> by Liz Koch — the psoas and how the body holds stress</li></ul>
+        <ul><li><strong>Core Awareness</strong> by Liz Koch — about the psoas and how your body holds onto things you thought you forgot</li></ul>
         <p><strong>Previously:</strong></p>
         <ul>
           <li><strong>Mindset</strong> by Carol Dweck</li>
@@ -372,14 +372,14 @@
     <div class="ov-in" onclick="event.stopPropagation()">
       <div class="ov-hd"><h2>About Bella</h2><p class="ov-sub ov-sh">Specimen III · Cross-Cultural</p></div>
       <div class="ov-bd">
-        <p>I grew up between multiple countries — each one taught me something different about how people understand health and make sense of their bodies.</p>
-        <p>When health messages fail, it's often because the message was designed for a world that person doesn't live in.</p>
+        <p>I grew up moving between countries. Each place had a different idea of what "taking care of yourself" meant. In Korea it's one thing. Somewhere else, completely different.</p>
+        <p>That gap is what got me into health communication. When a health message doesn't land, it's usually not because people don't care. It's because the message wasn't made for their world.</p>
         <div class="ov-hr"></div>
         <ul>
-          <li>Bilingual in English and Korean</li>
+          <li>Bilingual — English and Korean</li>
           <li>Certified Pilates instructor</li>
-          <li>MA Advertising → PhD Health Communication</li>
-          <li>Favorite filmmaker: Park Chan-wook</li>
+          <li>MA Advertising at UT Austin, headed toward a PhD</li>
+          <li>Favorite filmmaker: Park Chan-wook — precision is everything</li>
         </ul>
         <div class="ov-qt">"Like music and art, love of nature is a common language that can transcend political or social boundaries."</div>
         <p class="ov-qa">— Jimmy Carter</p>
