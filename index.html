@@ -135,7 +135,7 @@ body::before {
   body { cursor: default; }
 }
 
-/* ═══ NATURE BACKGROUND ═══ */
+/* ═══ NATURE BACKGROUND + FAIRY CANVAS ═══ */
 #nc { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 .aurora {
   position: absolute; inset: 0;
@@ -150,38 +150,16 @@ body::before {
   0% { opacity: 0.5; transform: scale(1) rotate(0deg); }
   100% { opacity: 1; transform: scale(1.03) rotate(0.5deg); }
 }
-.fly-bird { position: absolute; opacity: 0; animation: bf linear infinite; }
-.fly-bird::before, .fly-bird::after {
-  content: ''; position: absolute; width: 10px; height: 1.5px;
-  background: rgba(107,94,74,0.08); border-radius: 1px; top: 0;
+#fairyCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.6;
 }
-.fly-bird::before { left: 0; transform: rotate(-25deg); transform-origin: right center; }
-.fly-bird::after { left: 8px; transform: rotate(25deg); transform-origin: left center; }
-@keyframes bf {
-  0% { transform: translate(-40px,0); opacity: 0 }
-  5% { opacity: 0.25 }
-  95% { opacity: 0.06 }
-  100% { transform: translate(calc(100vw + 40px),-60px); opacity: 0 }
-}
-.petal {
-  position: absolute; border-radius: 50% 0 50% 50%;
-  opacity: 0; animation: pd linear infinite;
-}
-@keyframes pd {
-  0% { transform: translate(0,-20px) rotate(0) scale(0); opacity: 0 }
-  8% { opacity: 0.25 }
-  50% { transform: translate(-25px,50vh) rotate(180deg) scale(1) }
-  92% { opacity: 0.04 }
-  100% { transform: translate(-50px,105vh) rotate(360deg) scale(0.7); opacity: 0 }
-}
-.gp {
-  position: absolute; border-radius: 50%;
-  background: radial-gradient(circle, rgba(139,175,120,0.2), transparent 70%);
-  animation: gpF ease-in-out infinite;
-}
-@keyframes gpF {
-  0%, 100% { transform: translateY(0) scale(1); opacity: 0.12 }
-  50% { transform: translateY(-30px) scale(1.1); opacity: 0.22 }
+@media (prefers-reduced-motion: reduce) {
+  #fairyCanvas { display: none; }
+  .aurora { animation: none; }
 }
 
 /* ═══ LAYOUT ═══ */
@@ -1268,6 +1246,7 @@ body::before {
 <div class="cur-ring" id="cRing"></div>
 
 <div id="nc"><div class="aurora"></div></div>
+<canvas id="fairyCanvas"></canvas>
 
 <div class="page">
 
@@ -1295,7 +1274,6 @@ body::before {
     <div class="an d6">
       <div class="pl-nav">
         <a href="https://bellakang017.github.io/">portfolio</a>
-        <a href="https://github.com/bellakang017" target="_blank" rel="noopener">github</a>
         <a href="https://www.linkedin.com/in/bellakang017" target="_blank" rel="noopener">linkedin</a>
       </div>
       <p class="pl-cp">&copy; 2026 Bella Kang</p>
@@ -1858,42 +1836,116 @@ function tL() {
 }
 setTimeout(tL, 2000);
 
-/* ═══ NATURE BACKGROUND ═══ */
+/* ═══ FAIRY BACKGROUND — Canvas Particle System ═══ */
 (function() {
-  var c = document.getElementById('nc');
-  for (var i = 0; i < 3; i++) {
-    var b = document.createElement('div');
-    b.className = 'fly-bird';
-    b.style.top = (6 + Math.random() * 22) + '%';
-    b.style.animationDuration = (22 + Math.random() * 16) + 's';
-    b.style.animationDelay = (Math.random() * 24) + 's';
-    c.appendChild(b);
+  var canvas = document.getElementById('fairyCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  /* --- Tunable variables --- */
+  var FAIRY_COUNT = 28;       /* particle density */
+  var SPEED_FACTOR = 0.15;    /* global speed multiplier */
+  var MAX_OPACITY = 0.35;     /* peak brightness */
+  var MIN_SIZE = 1.2;         /* smallest fairy radius */
+  var MAX_SIZE = 3.0;         /* largest fairy radius */
+  var GLOW_RADIUS = 12;       /* soft glow spread */
+
+  /* Color palette: bright ruby + restrained gold + sage */
+  var COLORS = [
+    { r: 192, g: 107, b: 112 },  /* ruby / rose */
+    { r: 212, g: 176, b: 106 },  /* restrained gold */
+    { r: 139, g: 175, b: 120 },  /* sage */
+    { r: 180, g: 150, b: 100 },  /* warm gold */
+    { r: 220, g: 190, b: 170 },  /* soft blush */
+    { r: 160, g: 195, b: 140 },  /* light sage */
+  ];
+
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) { canvas.style.display = 'none'; return; }
+
+  var fairies = [];
+  var W, H, dpr;
+
+  function resize() {
+    dpr = window.devicePixelRatio || 1;
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
-  var pc = ['rgba(212,146,142,0.2)','rgba(194,216,180,0.16)','rgba(232,180,176,0.14)','rgba(180,204,164,0.18)'];
-  for (var j = 0; j < 6; j++) {
-    var p = document.createElement('div');
-    p.className = 'petal';
-    p.style.left = (8 + Math.random() * 84) + '%';
-    p.style.background = pc[Math.floor(Math.random() * pc.length)];
-    p.style.animationDuration = (14 + Math.random() * 12) + 's';
-    p.style.animationDelay = (Math.random() * 18) + 's';
-    var ps = 3.5 + Math.random() * 4;
-    p.style.width = ps + 'px';
-    p.style.height = (ps * 1.3) + 'px';
-    c.appendChild(p);
+
+  function createFairy() {
+    var col = COLORS[Math.floor(Math.random() * COLORS.length)];
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * SPEED_FACTOR,
+      vy: (Math.random() - 0.5) * SPEED_FACTOR * 0.6,
+      size: MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE),
+      color: col,
+      phase: Math.random() * Math.PI * 2,       /* twinkle phase */
+      twinkleSpeed: 0.008 + Math.random() * 0.015,
+      driftPhase: Math.random() * Math.PI * 2,   /* sine drift */
+      driftAmp: 0.3 + Math.random() * 0.5,
+      driftFreq: 0.002 + Math.random() * 0.004,
+    };
   }
-  for (var k = 0; k < 10; k++) {
-    var g = document.createElement('div');
-    g.className = 'gp';
-    var gs = 4 + Math.random() * 8;
-    g.style.width = gs + 'px';
-    g.style.height = gs + 'px';
-    g.style.left = (5 + Math.random() * 90) + '%';
-    g.style.top = (5 + Math.random() * 90) + '%';
-    g.style.animationDuration = (6 + Math.random() * 8) + 's';
-    g.style.animationDelay = (Math.random() * 6) + 's';
-    c.appendChild(g);
+
+  function init() {
+    resize();
+    fairies = [];
+    for (var i = 0; i < FAIRY_COUNT; i++) fairies.push(createFairy());
   }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < fairies.length; i++) {
+      var f = fairies[i];
+
+      /* Twinkle: oscillate opacity */
+      f.phase += f.twinkleSpeed;
+      var alpha = (Math.sin(f.phase) * 0.5 + 0.5) * MAX_OPACITY;
+      if (alpha < 0.03) continue; /* skip nearly invisible */
+
+      /* Drift: gentle sine wave */
+      f.driftPhase += f.driftFreq;
+      var dx = Math.sin(f.driftPhase) * f.driftAmp;
+
+      /* Move */
+      f.x += f.vx + dx * 0.05;
+      f.y += f.vy;
+
+      /* Wrap around edges */
+      if (f.x < -20) f.x = W + 20;
+      if (f.x > W + 20) f.x = -20;
+      if (f.y < -20) f.y = H + 20;
+      if (f.y > H + 20) f.y = -20;
+
+      /* Draw glow */
+      var grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.size + GLOW_RADIUS);
+      grad.addColorStop(0, 'rgba(' + f.color.r + ',' + f.color.g + ',' + f.color.b + ',' + (alpha * 0.8).toFixed(3) + ')');
+      grad.addColorStop(0.3, 'rgba(' + f.color.r + ',' + f.color.g + ',' + f.color.b + ',' + (alpha * 0.3).toFixed(3) + ')');
+      grad.addColorStop(1, 'rgba(' + f.color.r + ',' + f.color.g + ',' + f.color.b + ',0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.size + GLOW_RADIUS, 0, Math.PI * 2);
+      ctx.fill();
+
+      /* Draw core (bright center) */
+      ctx.fillStyle = 'rgba(255,255,255,' + (alpha * 0.9).toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.size * 0.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  init();
+  draw();
 })();
 
 /* ═══ OVERLAYS ═══ */
